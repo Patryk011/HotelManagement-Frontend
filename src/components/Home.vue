@@ -1,12 +1,65 @@
 <template>
-  <main id="home-page" class="home">
-    <header>
-      <h1>Home</h1>
-    </header>
+  <main id="Home-page" class="home">
+    <h1>Home</h1>
+    <div class="statistics">
+      <div class="statistic-box reservation-box" @click="goTo('/reservation')">
+        <h2>{{ reservationsCount }}</h2>
+        <p>Reservations</p>
+      </div>
+      <div class="statistic-box customer-box" @click="goTo('/customers')">
+        <h2>{{ customersCount }}</h2>
+        <p>Customers</p>
+      </div>
+      <div class="statistic-box hotel-box" @click="goTo('/hotel')">
+        <h2>{{ hotelsCount }}</h2>
+        <p>Hotels</p>
+      </div>
+      <div class="statistic-box room-box" @click="goTo('/rooms')">
+        <h2>{{ roomsCount }}</h2>
+        <p>Rooms</p>
+      </div>
+    </div>
   </main>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+const reservationsCount = ref(0);
+const customersCount = ref(0);
+const hotelsCount = ref(0);
+const roomsCount = ref(0);
+const router = useRouter();
+
+const goTo = (route) => {
+  router.push(route);
+};
+
+onMounted(async () => {
+  try {
+    const [
+      reservationsResponse,
+      customersResponse,
+      hotelsResponse,
+      roomsResponse,
+    ] = await Promise.all([
+      fetch("/api/reservation/all"),
+      fetch("/api/customers/all"),
+      fetch("/api/hotel/all"),
+      fetch("/api/room/all"),
+    ]);
+
+    reservationsCount.value = (await reservationsResponse.json()).length;
+    customersCount.value = (await customersResponse.json()).length;
+    hotelsCount.value = (await hotelsResponse.json()).length;
+    roomsCount.value = (await roomsResponse.json()).length;
+  } catch (error) {
+    console.error("Failed to fetch counts:", error);
+  }
+});
+</script>
+
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
 
@@ -37,7 +90,6 @@
   text-align: center;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
-  cursor: pointer;
 
   &:hover {
     transform: scale(1.05);

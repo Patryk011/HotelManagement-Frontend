@@ -23,7 +23,33 @@
         />
         <span class="text">Home</span>
       </router-link>
+      <router-link to="/customers" class="button">
+        <img src="../assets/customer.png" width="42" height="42" class="icon" />
+        <span class="text">Customers</span>
+      </router-link>
+      <router-link to="/rooms" class="button">
+        <img src="../assets/rooms.png" width="42" height="42" class="icon" />
+        <span class="text">Rooms</span>
+      </router-link>
+      <router-link to="/hotel" class="button">
+        <img src="../assets/hotel.png" width="42" height="42" class="icon" />
+        <span class="text">Hotel</span>
+      </router-link>
+      <router-link to="/reservation" class="button">
+        <img
+          src="../assets/reservation.png"
+          width="42"
+          height="42"
+          class="icon"
+        />
+        <span class="text">Reservation</span>
+      </router-link>
+      <router-link to="/payment" class="button">
+        <img src="../assets/payment.png" width="42" height="42" class="icon" />
+        <span class="text">Payment</span>
+      </router-link>
 
+      <div class="flex"></div>
       <button class="button logout" @click="logout">
         <img
           src="../assets/logout.png"
@@ -35,7 +61,6 @@
         <span class="text">Logout</span>
       </button>
     </nav>
-    <div class="flex"></div>
   </aside>
 </template>
 
@@ -45,7 +70,6 @@ import { useRouter } from "vue-router";
 
 const isExpanded = ref(localStorage.getItem("is_expanded") === "true");
 const router = useRouter();
-// const route = useRoute();
 
 const toggleMenu = () => {
   isExpanded.value = !isExpanded.value;
@@ -59,16 +83,24 @@ const logout = () => {
 </script>
 
 <style lang="scss" scoped>
+$dark: #343a40;
+$light: #f8f9fa;
+$grey: #6c757d;
+$primary: #007bff;
+$dark-alt: #495057;
+$danger: #dc3545;
+$sidebar-width: 250px;
+
 aside {
   display: flex;
   flex-direction: column;
-  background-color: var(--dark);
-  color: var(--light);
+  background-color: $dark;
+  color: $light;
   width: calc(2rem + 32px);
   overflow: hidden;
   min-height: 100vh;
   padding: 1rem;
-  transition: 0.2s ease-in-out;
+  transition: width 0.2s ease-in-out;
 
   .flex {
     flex: 1 1 0%;
@@ -80,20 +112,20 @@ aside {
     margin-bottom: 1rem;
     position: relative;
     top: 0;
-    transition: 0.2s ease-in-out;
+    transition: margin-bottom 0.2s ease-in-out;
 
     .menu-toggle {
-      transition: 0.2s ease-in-out;
+      transition: transform 0.2s ease-in-out;
 
       .icon {
         font-size: 2rem;
-        color: var(--light);
-        transition: 0.2s ease-out;
+        color: $light;
+        transition: color 0.2s ease-out, transform 0.2s ease-out;
       }
 
       &:hover {
         .icon {
-          color: var(--primary);
+          color: $primary;
           transform: translateX(0.5rem);
         }
       }
@@ -107,55 +139,63 @@ aside {
   }
 
   h3 {
-    color: var(--grey);
+    color: $grey;
     font-size: 0.875rem;
     margin-bottom: 0.5rem;
     text-transform: uppercase;
   }
 
   .menu {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     margin: 0 -1rem;
 
     .button {
       display: flex;
       align-items: center;
       text-decoration: none;
-      transition: 0.2s ease-in-out;
+      transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
       padding: 0.5rem 1rem;
 
       .icon {
         font-size: 2rem;
-        color: var(--light);
-        transition: 0.2s ease-in-out;
+        color: $light;
+        transition: color 0.2s ease-in-out;
       }
 
       .text {
-        color: var(--light);
-        transition: 0.2s ease-in-out;
+        color: $light;
+        transition: color 0.2s ease-in-out;
       }
 
       &:hover {
-        background-color: var(--dark-alt);
+        background-color: $dark-alt;
 
         .icon,
         .text {
-          color: var(--primary);
+          color: $primary;
         }
       }
 
       &.router-link-exact-active {
-        background-color: var(--dark-alt);
-        border-right: 5px solid var(--primary);
+        background-color: $dark-alt;
+        border-right: 5px solid $primary;
 
         .icon,
         .text {
-          color: var(--primary);
+          color: $primary;
         }
       }
     }
 
     .logout {
-      margin-top: 350px;
+      background-color: $danger;
+      color: white;
+
+      &:hover {
+        background-color: darken($danger, 10%);
+      }
     }
   }
 
@@ -165,12 +205,12 @@ aside {
 
     p {
       font-size: 0.875rem;
-      color: var(--grey);
+      color: $grey;
     }
   }
 
   &.is-expanded {
-    width: var(--sidebar-width);
+    width: $sidebar-width;
 
     .menu-toggle {
       transform: rotate(-180deg);
@@ -186,7 +226,7 @@ aside {
     }
 
     .footer {
-      opacity: 0;
+      opacity: 1;
     }
   }
 

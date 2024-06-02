@@ -23,10 +23,10 @@
         </div>
         <button type="submit">Login</button>
       </form>
+      <div v-if="showError" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
     </section>
-    <div v-if="showError" class="alert alert-danger" role="alert">
-      {{ errorMessage }}
-    </div>
   </main>
 </template>
 
@@ -63,6 +63,10 @@ const login = async () => {
     showError.value = true;
     errorMessage.value = "Incorrect username or password.";
     console.error("Error", error);
+    setTimeout(() => {
+      showError.value = false;
+      errorMessage.value = "";
+    }, 5000);
   }
 };
 </script>
@@ -131,14 +135,14 @@ const login = async () => {
       background-color: #2980b9;
     }
   }
-}
 
-.alert {
-  margin-top: 1rem;
-  padding: 0.75rem;
-  border-radius: 5px;
-  text-align: center;
-  color: white;
-  background-color: #e74c3c;
+  .alert {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    background-color: #e74c3c;
+  }
 }
 </style>
