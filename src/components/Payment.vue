@@ -23,6 +23,8 @@
           <td>
             <button
               class="btn btn-primary"
+              style="margin-right: 10px"
+              :class="payment.paid ? `disabled` : ``"
               @click="openPaymentForm(payment.id, 'creditCard')"
               :disabled="payment.paid"
             >
@@ -30,6 +32,7 @@
             </button>
             <button
               class="btn btn-primary"
+              :class="payment.paid ? `disabled` : ``"
               @click="openPaymentForm(payment.id, 'paypal')"
               :disabled="payment.paid"
             >
@@ -340,5 +343,11 @@ onMounted(() => {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 </style>
