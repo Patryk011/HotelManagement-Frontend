@@ -68,12 +68,8 @@
               Edit
             </button>
             <button
-              :class="[
-                'btn',
-                'btn-danger',
-                'delete',
-                { disabled: userRole !== 'ADMIN' },
-              ]"
+              v-if="userRole === 'ADMIN' || 'WORKER'"
+              class="btn btn-danger"
               @click="deleteCustomer(customer.id)"
             >
               Delete

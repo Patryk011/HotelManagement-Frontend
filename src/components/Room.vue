@@ -29,7 +29,11 @@
             <button class="btn btn-primary" @click="showEditForm(room.id)">
               Edit
             </button>
-            <button class="btn btn-danger delete" @click="deleteRoom(room.id)">
+            <button
+              v-if="userRole === 'ADMIN' || 'WORKER'"
+              class="btn btn-danger delete"
+              @click="deleteRoom(room.id)"
+            >
               Delete
             </button>
           </td>
@@ -236,6 +240,8 @@ const editRoom = reactive({
   price: null,
   hotelId: null,
 });
+
+const userRole = ref(sessionStorage.getItem("role"));
 
 const clearError = () => {
   clearTimeout(errorTimeout);

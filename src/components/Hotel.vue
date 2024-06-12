@@ -30,12 +30,8 @@
               Edit
             </button>
             <button
-              :class="[
-                'btn',
-                'btn-danger',
-                'delete',
-                { disabled: userRole !== 'ADMIN' },
-              ]"
+              v-if="userRole === 'ADMIN' || 'WORKER'"
+              class="btn btn-danger"
               @click="deleteHotel(hotel.id)"
             >
               Delete
@@ -172,11 +168,6 @@ const editedHotel = reactive({ id: "", name: "", address: "" });
 
 const router = useRouter();
 
-const checkUserRole = () => {
-  const role = sessionStorage.getItem("role");
-  console.log(role);
-};
-
 const clearError = () => {
   clearTimeout(errorTimeout);
   showError.value = false;
@@ -302,7 +293,6 @@ const showRooms = (hotelId) => {
 
 onMounted(() => {
   getHotels();
-  checkUserRole();
 });
 </script>
 
@@ -367,6 +357,7 @@ onMounted(() => {
 
     &.btn-danger {
       background: linear-gradient(45deg, #ed213a, #93291e);
+      margin-left: 20px;
 
       &:hover {
         box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.1);

@@ -32,6 +32,7 @@
               Edit
             </button>
             <button
+              v-if="userRole === 'ADMIN' || 'WORKER'"
               class="btn btn-danger cancel"
               @click="cancelReservation(reservation.id)"
             >
@@ -208,6 +209,8 @@ const editReservation = reactive({
   endDate: null,
   status: "",
 });
+
+const userRole = ref(sessionStorage.getItem("role"));
 
 const clearError = () => {
   clearTimeout(errorTimeout);
