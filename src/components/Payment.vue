@@ -75,7 +75,6 @@
       </div>
     </div>
 
-    <!-- PayPal Payment Modal -->
     <div v-if="showPayPalForm" class="modal">
       <div class="modal-content">
         <span class="close" @click="closePaymentForm">&times;</span>

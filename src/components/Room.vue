@@ -12,6 +12,7 @@
           <th>Type</th>
           <th>Room Number</th>
           <th>Vacancy</th>
+          <th>Clean</th>
           <th>Price per night</th>
           <th>Hotel ID</th>
           <th>Actions</th>
@@ -23,9 +24,15 @@
           <td>{{ room.type }}</td>
           <td>{{ room.number }}</td>
           <td>{{ room.free ? "Yes" : "No" }}</td>
+          <td>{{ room.clean ? "Yes" : "No" }}</td>
+
           <td>{{ room.price }}</td>
           <td>{{ room.hotelId }}</td>
+
           <td>
+            <button class="btn btn-primary" @click="toggleCleanStatus(room.id)">
+              {{ room.clean ? "Set to dirty" : "Set to Clean" }}
+            </button>
             <button class="btn btn-primary" @click="showEditForm(room.id)">
               Edit
             </button>
@@ -51,6 +58,7 @@
           <th>Type</th>
           <th>Room Number</th>
           <th>Vacancy</th>
+          <th>Clean</th>
           <th>Price per night</th>
           <th>Hotel ID</th>
           <th>Actions</th>
@@ -62,9 +70,13 @@
           <td>{{ room.type }}</td>
           <td>{{ room.number }}</td>
           <td>{{ room.free ? "Yes" : "No" }}</td>
+          <td>{{ room.clean ? "Yes" : "No" }}</td>
           <td>{{ room.price }}</td>
           <td>{{ room.hotelId }}</td>
           <td>
+            <button class="btn btn-primary" @click="toggleCleanStatus(room.id)">
+              {{ room.clean ? "Set to dirty" : "Set to Clean" }}
+            </button>
             <button class="btn btn-primary" @click="showEditForm(room.id)">
               Edit
             </button>
@@ -230,6 +242,7 @@ const newRoom = reactive({
   free: null,
   price: null,
   hotelId: null,
+  clean: null,
 });
 
 const editRoom = reactive({
@@ -239,6 +252,7 @@ const editRoom = reactive({
   free: null,
   price: null,
   hotelId: null,
+  clean: null,
 });
 
 const userRole = ref(sessionStorage.getItem("role"));
@@ -266,6 +280,7 @@ const addRoom = async () => {
       newRoom.free = null;
       newRoom.price = null;
       newRoom.hotelId = null;
+      newRoom.clean = null;
       showForm.value = false;
     } else {
       const errorData = await response.text();
@@ -359,6 +374,31 @@ const toggleAvailableRooms = () => {
   showAvailableRooms.value = !showAvailableRooms.value;
   if (showAvailableRooms.value) {
     getAvailableRooms();
+  }
+};
+
+const toggleCleanStatus = async (roomId) => {
+  try {
+    const response = await fetch(`/api/room/${roomId}/toggleClean`, {
+      method: "PUT",
+    });
+    if (response.ok) {
+      const data = await response.json();
+      const index = rooms.value.findIndex((room) => room.id === roomId);
+      if (index !== -1) {
+        rooms.value[index].clean = data.clean;
+      }
+      const availableRoomIndex = availableRooms.value.findIndex(
+        (room) => room.id === roomId
+      );
+      if (availableRoomIndex !== -1) {
+        availableRooms.value[availableRoomIndex].clean = data.clean;
+      }
+    } else {
+      console.error("Failed to toggle clean status:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error during toggling clean status:", error);
   }
 };
 
