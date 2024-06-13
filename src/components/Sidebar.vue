@@ -23,7 +23,7 @@
         />
         <span class="text">Home</span>
       </router-link>
-      <router-link to="/customers" class="button">
+      <router-link to="/customers" class="button" v-if="userRole !== 'CLEANER'">
         <img src="../assets/customer.png" width="42" height="42" class="icon" />
         <span class="text">Customers</span>
       </router-link>
@@ -31,11 +31,15 @@
         <img src="../assets/rooms.png" width="42" height="42" class="icon" />
         <span class="text">Rooms</span>
       </router-link>
-      <router-link to="/hotel" class="button">
+      <router-link to="/hotel" class="button" v-if="userRole !== 'CLEANER'">
         <img src="../assets/hotel.png" width="42" height="42" class="icon" />
         <span class="text">Hotel</span>
       </router-link>
-      <router-link to="/reservation" class="button">
+      <router-link
+        to="/reservation"
+        class="button"
+        v-if="userRole !== 'CLEANER'"
+      >
         <img
           src="../assets/reservation.png"
           width="42"
@@ -44,20 +48,18 @@
         />
         <span class="text">Reservation</span>
       </router-link>
-      <router-link to="/payment" class="button">
+      <router-link to="/payment" class="button" v-if="userRole !== 'CLEANER'">
         <img src="../assets/payment.png" width="42" height="42" class="icon" />
         <span class="text">Payment</span>
       </router-link>
-      <router-link to="/send" class="button">
+      <router-link to="/send" class="button" v-if="userRole === 'ADMIN'">
         <img src="../assets/send.png" width="42" height="42" class="icon" />
         <span class="text">Send Email</span>
       </router-link>
-
-      <router-link to="/email" class="button">
+      <router-link to="/email" class="button" v-if="userRole === 'ADMIN'">
         <img src="../assets/email.png" width="42" height="42" class="icon" />
         <span class="text">Email</span>
       </router-link>
-
       <div class="flex"></div>
       <button class="button logout" @click="logout">
         <img
@@ -74,11 +76,16 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 
 const isExpanded = ref(localStorage.getItem("is_expanded") === "true");
 const router = useRouter();
+const userRole = ref(sessionStorage.getItem("role"));
+
+watchEffect(() => {
+  userRole.value = sessionStorage.getItem("role");
+});
 
 const toggleMenu = () => {
   isExpanded.value = !isExpanded.value;
@@ -87,6 +94,7 @@ const toggleMenu = () => {
 
 const logout = () => {
   sessionStorage.clear();
+  userRole.value = null;
   router.push("/login");
 };
 </script>

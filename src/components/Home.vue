@@ -2,15 +2,27 @@
   <main id="Home-page" class="home">
     <h1>Home</h1>
     <div class="statistics">
-      <div class="statistic-box reservation-box" @click="goTo('/reservation')">
+      <div
+        v-if="userRole !== 'CLEANER'"
+        class="statistic-box reservation-box"
+        @click="goTo('/reservation')"
+      >
         <h2>{{ reservationsCount }}</h2>
         <p>Reservations</p>
       </div>
-      <div class="statistic-box customer-box" @click="goTo('/customers')">
+      <div
+        v-if="userRole !== 'CLEANER'"
+        class="statistic-box customer-box"
+        @click="goTo('/customers')"
+      >
         <h2>{{ customersCount }}</h2>
         <p>Customers</p>
       </div>
-      <div class="statistic-box hotel-box" @click="goTo('/hotel')">
+      <div
+        v-if="userRole !== 'CLEANER'"
+        class="statistic-box hotel-box"
+        @click="goTo('/hotel')"
+      >
         <h2>{{ hotelsCount }}</h2>
         <p>Hotels</p>
       </div>
@@ -30,6 +42,7 @@ const reservationsCount = ref(0);
 const customersCount = ref(0);
 const hotelsCount = ref(0);
 const roomsCount = ref(0);
+const userRole = ref(sessionStorage.getItem("role")); // Retrieve the user role from session storage
 const router = useRouter();
 
 const goTo = (route) => {

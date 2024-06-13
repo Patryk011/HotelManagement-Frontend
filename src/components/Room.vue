@@ -89,7 +89,7 @@
     </table>
 
     <button
-      v-if="!showForm && !editForm"
+      v-if="!showForm && !editForm && userRole !== 'CLEANER'"
       class="btn btn-primary"
       @click="showForm = true"
     >

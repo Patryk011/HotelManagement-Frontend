@@ -212,6 +212,8 @@ const editReservation = reactive({
 
 const userRole = ref(sessionStorage.getItem("role"));
 
+console.log(userRole.value);
+
 const clearError = () => {
   clearTimeout(errorTimeout);
   showError.value = false;

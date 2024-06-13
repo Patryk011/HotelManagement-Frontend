@@ -58,7 +58,11 @@ const login = async () => {
     const userData = await response.json();
     sessionStorage.setItem("username", userData.username);
     sessionStorage.setItem("role", userData.role);
+
     router.push("/");
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   } catch (error) {
     showError.value = true;
     errorMessage.value = "Incorrect username or password.";
