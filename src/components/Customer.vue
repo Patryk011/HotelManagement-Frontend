@@ -345,8 +345,7 @@ const deleteCustomer = async (customerId) => {
         (customer) => customer.id !== customerId
       );
     } else {
-      const errorData = await response.text();
-      errorMessage.value = errorData;
+      errorMessage.value = "Nie można usunąć";
       showError.value = true;
 
       errorTimeout = setTimeout(() => {
@@ -442,8 +441,7 @@ const saveCustomer = async () => {
       }
       resetForm();
     } else {
-      const errorData = await response.text();
-      errorMessage.value = errorData;
+      errorMessage.value = `Błędne dane`;
       showError.value = true;
 
       errorTimeout = setTimeout(() => {

@@ -240,8 +240,7 @@ const createReservation = async () => {
       newReservation.status = "";
       showForm.value = false;
     } else {
-      const errorData = await response.text();
-      errorMessage.value = errorData;
+      errorMessage.value = "Błędne dane";
       showError.value = true;
 
       errorTimeout = setTimeout(() => {
@@ -273,8 +272,7 @@ const updateReservation = async () => {
       }
       editForm.value = false;
     } else {
-      const errorData = await response.text();
-      errorMessage.value = errorData;
+      errorMessage.value = "Błędne dane";
       showError.value = true;
 
       errorTimeout = setTimeout(() => {

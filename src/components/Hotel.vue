@@ -255,8 +255,7 @@ const saveHotel = async () => {
       }
       resetForm();
     } else {
-      const errorData = await response.text();
-      errorMessage.value = errorData;
+      errorMessage.value = "Błędne dane";
       showError.value = true;
 
       errorTimeout = setTimeout(() => {
