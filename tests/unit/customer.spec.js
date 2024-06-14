@@ -1,4 +1,3 @@
-
 import Customer from '@/components/Customer.vue'; 
 import { createApp } from 'vue';
 

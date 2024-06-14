@@ -66,7 +66,6 @@ const login = async () => {
   } catch (error) {
     showError.value = true;
     errorMessage.value = "Incorrect username or password.";
-    console.error("Error", error);
     setTimeout(() => {
       showError.value = false;
       errorMessage.value = "";
