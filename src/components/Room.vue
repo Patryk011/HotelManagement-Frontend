@@ -33,11 +33,15 @@
             <button class="btn btn-primary" @click="toggleCleanStatus(room.id)">
               {{ room.clean ? "Set to dirty" : "Set to Clean" }}
             </button>
-            <button class="btn btn-primary" @click="showEditForm(room.id)">
+            <button
+              v-if="userRole !== 'CLEANER'"
+              class="btn btn-primary"
+              @click="showEditForm(room.id)"
+            >
               Edit
             </button>
             <button
-              v-if="userRole === 'ADMIN' || 'WORKER'"
+              v-if="userRole === 'ADMIN' || userRole === 'WORKER'"
               class="btn btn-danger delete"
               @click="deleteRoom(room.id)"
             >
@@ -49,7 +53,9 @@
     </table>
 
     <table
-      v-if="showAvailableRooms && !editForm && !showForm"
+      v-if="
+        showAvailableRooms && !editForm && !showForm && userRole !== 'CLEANER'
+      "
       class="table table-striped"
     >
       <thead>
@@ -77,10 +83,18 @@
             <button class="btn btn-primary" @click="toggleCleanStatus(room.id)">
               {{ room.clean ? "Set to dirty" : "Set to Clean" }}
             </button>
-            <button class="btn btn-primary" @click="showEditForm(room.id)">
+            <button
+              v-if="userRole !== 'CLEANER'"
+              class="btn btn-primary"
+              @click="showEditForm(room.id)"
+            >
               Edit
             </button>
-            <button class="btn btn-danger delete" @click="deleteRoom(room.id)">
+            <button
+              v-if="userRole === 'ADMIN' || userRole === 'WORKER'"
+              class="btn btn-danger delete"
+              @click="deleteRoom(room.id)"
+            >
               Delete
             </button>
           </td>
@@ -295,6 +309,8 @@ const addRoom = async () => {
     console.error("Error during adding room:", error);
   }
 };
+
+console.log(userRole);
 
 const updateRoom = async () => {
   try {

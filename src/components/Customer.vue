@@ -68,7 +68,7 @@
               Edit
             </button>
             <button
-              v-if="userRole === 'ADMIN' || 'WORKER'"
+              v-if="userRole === 'ADMIN' || userRole === 'WORKER'"
               class="btn btn-danger"
               @click="deleteCustomer(customer.id)"
             >
