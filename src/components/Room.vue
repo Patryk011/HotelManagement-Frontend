@@ -297,7 +297,7 @@ const addRoom = async () => {
       newRoom.clean = null;
       showForm.value = false;
     } else {
-      errorMessage.value = `Niepoprawne dane `;
+      errorMessage.value = ``;
       showError.value = true;
 
       errorTimeout = setTimeout(() => {
@@ -335,7 +335,7 @@ const updateRoom = async () => {
       }
       editForm.value = false;
     } else {
-      errorMessage.value = `Błędne dane`;
+      errorMessage.value = ``;
       showError.value = true;
 
       errorTimeout = setTimeout(() => {

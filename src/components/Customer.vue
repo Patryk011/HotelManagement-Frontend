@@ -345,12 +345,7 @@ const deleteCustomer = async (customerId) => {
         (customer) => customer.id !== customerId
       );
     } else {
-      errorMessage.value = "Nie można usunąć";
-      showError.value = true;
-
-      errorTimeout = setTimeout(() => {
-        clearError();
-      }, 3500);
+      console.log(errorMessage.value);
     }
   } catch (error) {
     console.error("Error during deleting customer:", error);
@@ -441,7 +436,7 @@ const saveCustomer = async () => {
       }
       resetForm();
     } else {
-      errorMessage.value = `Błędne dane`;
+      errorMessage.value = ``;
       showError.value = true;
 
       errorTimeout = setTimeout(() => {

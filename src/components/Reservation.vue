@@ -240,12 +240,7 @@ const createReservation = async () => {
       newReservation.status = "";
       showForm.value = false;
     } else {
-      errorMessage.value = "Błędne dane";
-      showError.value = true;
-
-      errorTimeout = setTimeout(() => {
-        clearError();
-      }, 3500);
+      console.log(errorMessage.value);
     }
   } catch (error) {
     console.error("Error during adding reservation:", error);
