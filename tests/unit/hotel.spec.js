@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import { createApp, nextTick } from 'vue';
 import router from '@/router';
 import Hotel from '@/components/Hotel.vue';
